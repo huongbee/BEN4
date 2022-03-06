@@ -96,7 +96,7 @@ function veHinh(n, fn) {
 
 // veHinh(n, (x, y, n) => x == n || y == n || (x == n - y + 1)); // hinh 3
 // veHinh(n, (x, y) => { return x <= y }); // hinh 1 // fn dang dc dinh nghia
-veHinh(n, (x, y, n) => x <= n - y + 1); // hinh 2 // fn dang dc dinh nghia
+// veHinh(n, (x, y, n) => x <= n - y + 1); // hinh 2 // fn dang dc dinh nghia
 /*
 
 
@@ -126,3 +126,20 @@ veHinh(n, (x, y, n) => x <= n - y + 1); // hinh 2 // fn dang dc dinh nghia
 0 2 2 2 0
 
  */
+
+
+
+for (let y = 1; y <= n; y++) {
+  let str = '';
+  for (let x = 1; x <= n; x++) {
+    if (x == y || x + y == n + 1) {
+      str += '0 ';
+    } else if (x > y) {
+      str += '1 ';
+    } else {
+      str += '2 ';
+    }
+  }
+  console.log(str);
+}
+// veHinh(n, ()=>{}, ()=>{}, ()=>{});
