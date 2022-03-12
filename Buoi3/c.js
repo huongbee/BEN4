@@ -1,6 +1,7 @@
 class Person {
   constructor(name) {
     this.name = name;
+    this.age = 10;
   }
 }
 
@@ -17,13 +18,17 @@ function rename(obj, newName) {
   return o;
 }
 
+function deleteName(obj) {
+  delete obj.name;
+}
 
 const ti = new Person('Ti');
-// console.log(ti);
-const obj = rename(ti, 'Nguyen Van Ti');
+console.log(ti);
+rename(ti, 'Nguyen Van Ti');
+deleteName(ti);
 
 console.log(ti);
-console.log(obj);
+// console.log(obj);
 
 
 
@@ -37,11 +42,11 @@ console.log(obj);
 // console.log(x);
 
 
-function A(array) {
-  array.push('n');
-}
+// function A(array) {
+//   array.push('n');
+// }
 
-const arr = [1, 2, 3];
-A(arr);
+// const arr = [1, 2, 3];
+// A(arr);
 
-console.log(arr);
+// console.log(arr);
