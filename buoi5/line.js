@@ -17,7 +17,8 @@ class Line {
   }
 }
 
-const A = new Point(2, 0);
-const B = new Point(5, 0);
-const AB = new Line(A, B);
-console.log(AB.getLength());
+// const A = new Point(2, 0);
+// const B = new Point(5, 0);
+// const AB = new Line(A, B);
+// console.log(AB.getLength());
+module.exports = Line;
