@@ -32,11 +32,6 @@ const getData = (uri, callback) => {
   });
 }
 
-getData(uri, (error, data) => {
-  if (error) throw error;
-  console.log(`Tại ${data.location} có nhiet do la: ${data.temC} do C`);
-});
-
 /**
 3 cách xu ly async
 - dung callback fn
