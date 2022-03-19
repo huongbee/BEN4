@@ -6,19 +6,14 @@ class Line {
    * @param {Point} A
    * @param {Point} B
    */
-  // constructor(A, B) {
-  //   this.pointA = A;
-  //   this.pointB = B;
-  // }
-  /**
-   *
-   * @param {Point} A
-   * @param {Point} B
-   * @returns
-   */
-  static getLength(A, B) {
-    const dx = A.x - B.x;
-    const dy = A.y - B.y;
+  constructor(A, B) {
+    this.pointA = A;
+    this.pointB = B;
+  }
+
+  getLength() {
+    const dx = this.pointA.x - this.pointB.x;
+    const dy = this.pointA.y - this.pointB.y;
     return Math.sqrt(dx * dx + dy * dy);
   }
   /**
@@ -31,13 +26,13 @@ class Line {
   }
 }
 
-const A = new Point(2, 0);
-const B = new Point(5, 0);
+// const A = new Point(2, 0);
+// const B = new Point(5, 0);
 // const AB = new Line(A, B).getLength();
-const C = new Point(0, 0);
+// const C = new Point(0, 0);
 // const AC = new Line(A, C).getLength();
-const AB = Line.getLength(A, B);
-const AC = Line.getLength(A, C);
-console.log(Line.compare(AB, AC));
+// // const AB = Line.getLength(A, B);
+// // const AC = Line.getLength(A, C);
+// console.log(Line.compare(AB, AC));
 
 module.exports = Line;
