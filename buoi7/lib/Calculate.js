@@ -19,7 +19,8 @@ class Calculate {
     throw new Error('Math error!')
   }
   get result() {
-    let r = this.a + this.pt + this.b;
+    let r = this.a + this.operator + this.b;
     return eval(r);
   }
 }
+module.exports = Calculate;
