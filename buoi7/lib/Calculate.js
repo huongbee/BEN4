@@ -14,8 +14,8 @@ class Calculate {
     if (['+', 'cong'].includes(this.pheptinh)) return '+';
     if (['-', 'tru'].includes(this.pheptinh)) return '-';
     if (['*', 'nhan'].includes(this.pheptinh)) return '*';
-    if (['/', 'chia'].includes(this.pheptinh) && this.b !== 0) return '/';
-    if (['%', 'chiadu'].includes(this.pheptinh) && this.b !== 0) return '%';
+    if ((this.pheptinh === '/' || this.pheptinh === 'chia') && this.b != 0) return '/';
+    if (['%', 'chiadu'].includes(this.pheptinh) && this.b != 0) return '%';
     throw new Error('Math error!')
   }
   get result() {
