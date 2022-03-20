@@ -54,5 +54,3 @@ cong(20, 15, (err, tong) => {
     })
   })
 })
-
-// callback hell
