@@ -13,8 +13,13 @@ class Metaweather {
       })
     })
   }
-  getWeather(id) {
-  }
+  getWeather = (id) => new Promise((resolve, reject) => {
+    request.get(`${this.baseUrl}/${id}`, { timeout: 6000 }, (err, res, body) => {
+      if (err) return reject(err);
+      const data = JSON.parse(body);
+      return resolve(data);
+    });
+  });
 }
 
 module.exports = Metaweather;

@@ -60,6 +60,33 @@ app.post('/search', async (req, res) => {
   })
 });
 
+app.get('/forecast/:id', async (req, res) => {
+  const { id } = req.params;
+  const weatherApi = new Metaweather();
+  let result = null;
+  try {
+    result = await weatherApi.getWeather(id);
+  } catch (error) {
+    return res.render('detail', {
+      code: 1001,
+      message: 'Lỗi, vui lòng thử lại sau',
+      data: null
+    });
+  }
+  if (!result || !result.woeid) {
+    return res.render('detail', {
+      code: 1002,
+      message: 'Không tìm thấy thông tin',
+      data: null
+    });
+  }
+  return res.render('detail', {
+    code: 1000,
+    message: 'Thành công',
+    data: result
+  });
+});
+
 app.listen(3000, () => {
   console.log('listening on port 3000')
 })
