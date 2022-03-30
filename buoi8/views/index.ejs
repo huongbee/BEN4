@@ -14,7 +14,7 @@
   <div class="container">
     <h1>Weather App</h1>
     <form action="/search" method="post">
-      <input type="text" name="txtKeyword" />
+      <input type="text" name="txtKeyword" value="<%= code ? data.txtKeyword : '' %>" />
       <input type="submit" value="Search" class="btn btn-primary">
     </form>
     <% if (code) { %>

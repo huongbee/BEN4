@@ -91,6 +91,14 @@ app.listen(3000, () => {
   console.log('listening on port 3000')
 })
 
+// Dieukien ? kqNeuDieukienTrue : kqNeuDieukienFalse;
+
+
 // https://www.metaweather.com/static/img/weather/lc.svg
 // https://www.metaweather.com/api/location/2487956/
 // https://www.metaweather.com/api/location/search/?query=San+Francisco
+
+
+
+// const n = 3.45843343;
+// console.log(Math.round(n * 1000) / 1000);
