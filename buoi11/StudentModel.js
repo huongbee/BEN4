@@ -11,5 +11,8 @@ const StudentModel = mongoose.model('Student', Student);
 Student.index({
   id: { unique: true },
   email: { unique: true, sparse: true },
+  id: 1
 })
 module.exports = StudentModel;
+
+// 62524ca4fbf019f42fc97903 ObjectId hex: [09abcdef]

@@ -14,6 +14,7 @@ mongoose.connect('mongodb://localhost:27017/my_database', { useNewUrlParser: tru
 StudentModel.create({ id: 1, name: 'Nguyen Van Ti', avatar: 'http://example.com/.png' })
 
 StudentModel.insertMany([
-  { id: 1, name: 'Nguyen Van Ti' },
-  { id: 2, name: 'Nguyen Van Teo' }
+  // { id: 1, name: 'Nguyen Van Ti' },
+  { id: 2, name: 'Nguyen Van Teo', email: 'a@gmail.com' }
 ])
+// update delete find
