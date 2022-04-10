@@ -9,7 +9,8 @@ const Student = new Schema({
   tags: [{
     id: String,
     value: String
-  }]  // [{id: 1, value: "AAAAA"},{ id: 2, value:"BBBBB"}]
+  }],  // [{id: 1, value: "AAAAA"},{ id: 2, value:"BBBBB"}]
+  class: String
 });
 const StudentModel = mongoose.model('Student', Student);
 Student.index({
