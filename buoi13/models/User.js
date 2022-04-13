@@ -33,9 +33,22 @@ class User extends UserModel {
     const user = await UserModel.create({ email, password: pass, name });
     return user;
   }
-  // sai email => khong tim thay user
-  // sai pass  => sai thong tin mk
-
-  // sai email || sai pass  => sai thong tin user
+  async signIn(email, password) {
+    const user = await UserModel.findOne({ email }).lean();
+    if (!user) {
+      return { success: false, data: null, message: 'Can not find user' };
+    }
+    // check pass
+    const signInPass = md5(md5(password + this.#PASS_KEY));
+    if (signInPass !== user.password) {
+      return { success: false, data: null, message: 'Password invalid' };
+    }
+    const { _id, posts, friends, receiveRequests, sendRequests, name } = user;
+    return {
+      success: true,
+      data: { _id, posts, friends, receiveRequests, sendRequests, email, name },
+      message: 'Success'
+    };
+  }
 }
 module.exports = User;
