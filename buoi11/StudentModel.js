@@ -8,8 +8,9 @@ const Student = new Schema({
   // tags: [String], // ["AAAA", 'BBBB', '.....]
   tags: [{
     id: String,
-    value: String
-  }],  // [{id: 1, value: "AAAAA"},{ id: 2, value:"BBBBB"}]
+    value: String,
+    _id: false
+  }],  // [{id: 1, value: "AAAAA"},{ id: 2, value:"BBBBB"}, {id: 3, value: "AAAAA"},{ id: 4, value:"BBBBB"}]
   class: String
 });
 const StudentModel = mongoose.model('Student', Student);
