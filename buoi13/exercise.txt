@@ -24,6 +24,7 @@
  *      4.5 Dùng tài khoản nguyenvana@gmail.com dislike bài post có id ...
  *      4.6 Dùng tài khoản user nguyenvana@gmail.com gửi yêu cầu kết bạn đến
  *          tài khoản nguyenvanb@gmail.com
+
  *      4.7 Account nguyenvanb@gmail.com accept yêu cầu kết bạn của acc nguyenvana@gmail.com
  *      4.8 Account nguyenvanb@gmail.com huỷ yêu cầu kết bạn của acc nguyenvana@gmail.com
  *

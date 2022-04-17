@@ -18,7 +18,7 @@ const PostSchema = new Schema({
   }],
   comments: [{
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Comment',
   }],
   createdAt: {
     type: Date,
@@ -28,7 +28,7 @@ const PostSchema = new Schema({
 });
 
 const PostModel = mongoose.model('Post', PostSchema);
-class Post extends PostModel {
+class Post {
   async createPost(idAuthor, content, images) {
     const post = await PostModel.create({
       author: idAuthor,
@@ -37,6 +37,51 @@ class Post extends PostModel {
       images
     });
     return post;
+  }
+  async findPostById(id) {
+    const post = await PostModel.findOne({ _id: id }).lean();
+    return post;
+  }
+  async addComment(idPost, commentId) {
+    const update = await PostModel.updateOne(
+      { _id: idPost },
+      {
+        $addToSet: { comments: commentId }
+      }
+    );
+    return update;
+  }
+  async removeComment(idPost, commentId) {
+    const update = await PostModel.updateOne(
+      { _id: idPost },
+      {
+        $pull: { comments: commentId }
+      }
+    );
+    return update;
+  }
+
+  /**
+   *
+   * @param {*} idPost
+   * @param {*} idUser
+   * @param {*} action
+   * @returns
+   */
+  async actionLike(idPost, idUser, action) {
+    const objUpdate = {};
+    if (action === 'like') {
+      objUpdate.$addToSet = { likes: idUser };
+    } else if (action === 'unlike') {
+      objUpdate.$pull = { likes: idUser };
+    } else {
+      return false;
+    }
+    const update = await PostModel.updateOne(
+      { _id: idPost },
+      objUpdate
+    );
+    return update;
   }
 };
 module.exports = Post;
