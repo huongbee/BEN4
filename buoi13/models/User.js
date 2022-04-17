@@ -50,5 +50,38 @@ class User extends UserModel {
       message: 'Success'
     };
   }
+
+  async findOne(email) {
+    const user = await UserModel.findOne({ email }).lean();
+    return user;
+  }
+  async sendFriendRequest(idSender, idReceiver) {
+    const updateSender = await UserModel.updateOne(
+      { _id: idSender },
+      {
+        $addToSet: { sendRequests: idReceiver }
+      }
+    );
+    console.log(updateSender);
+    if (updateSender.nModified === 1) {
+      const updatereceiver = await UserModel.updateOne(
+        { _id: idReceiver },
+        {
+          $addToSet: { receiveRequests: idSender }
+        }
+      );
+      if (updatereceiver.nModified === 1) return true;
+      else {
+        // reset sender
+        await UserModel.updateOne(
+          { _id: idSender },
+          {
+            $pull: { sendRequests: idReceiver }
+          }
+        );
+      }
+    }
+    return false;
+  }
 }
 module.exports = User;
