@@ -56,6 +56,7 @@ class User extends UserModel {
     return user;
   }
   async sendFriendRequest(idSender, idReceiver) {
+    // 1 - send request to receiver
     const updateSender = await UserModel.updateOne(
       { _id: idSender },
       {
@@ -64,6 +65,7 @@ class User extends UserModel {
     );
     console.log(updateSender);
     if (updateSender.nModified === 1) {
+      // 2 - receiver receive a request
       const updatereceiver = await UserModel.updateOne(
         { _id: idReceiver },
         {
@@ -83,5 +85,62 @@ class User extends UserModel {
     }
     return false;
   }
+  async acceptFriendRequest(idSender, idReceiver) {
+    // 1 - receiver accept request
+    const updateReceiver = await UserModel.updateOne(
+      { _id: idReceiver },
+      {
+        $pull: { receiveRequests: idSender },
+        $addToSet: { friends: idSender }
+      }
+    );
+    if (updateReceiver.nModified === 1) {
+      // 2 - set friend for sender
+      const updateSender = await UserModel.updateOne(
+        { _id: idSender },
+        {
+          $pull: { sendRequests: idReceiver },
+          $addToSet: { friends: idReceiver }
+        }
+      );
+      if (updateSender.nModified === 1) return true;
+      // reset receiver
+      await UserModel.updateOne(
+        { _id: idReceiver },
+        {
+          $addToSet: { receiveRequests: idSender },
+          $pull: { friends: idSender }
+        }
+      );
+    }
+    return false;
+  }
+  async refuseFriendRequest(idSender, idReceiver) {
+    // 1 - receiver refuse request
+    const updateReceiver = await UserModel.updateOne(
+      { _id: idReceiver },
+      {
+        $pull: { receiveRequests: idSender }
+      }
+    );
+    if (updateReceiver.nModified === 1) {
+      // 2 - reset for sender
+      const updateSender = await UserModel.updateOne(
+        { _id: idSender },
+        {
+          $pull: { sendRequests: idReceiver }
+        }
+      );
+      if (updateSender.nModified === 1) return true;
+      // reset receiver
+      await UserModel.updateOne(
+        { _id: idReceiver },
+        {
+          $addToSet: { receiveRequests: idSender }
+        }
+      );
+    }
+    return false;
+  }
 }
-module.exports = User;
+module.exports = { User, UserModel };

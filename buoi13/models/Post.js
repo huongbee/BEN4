@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const momentTz = require('moment-timezone');
+const UserModel = require('./User').UserModel;
 
 const PostSchema = new Schema({
   author: {
@@ -36,6 +37,11 @@ class Post {
       createdAt: momentTz(new Date()).tz('Asia/Ho_Chi_Minh'),
       images
     });
+    await UserModel.updateOne(
+      { _id: idAuthor },
+      {
+        $addToSet: { posts: post._id }
+      })
     return post;
   }
   async findPostById(id) {
@@ -82,6 +88,16 @@ class Post {
       objUpdate
     );
     return update;
+  }
+  async getPostsByAuthor(emailAuthor) {
+    const posts = await UserModel.findOne({ email: emailAuthor }).populate({
+      path: 'posts',
+      select: 'content createdAt -_id',
+      match: {
+        _id: { $ne: '625d64232adc9a0be11e9c0d' } // !=   === not equals  $gte $lte $gt $lt
+      }
+    }).exec();
+    return posts;
   }
 };
 module.exports = Post;
