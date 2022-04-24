@@ -142,5 +142,12 @@ class User extends UserModel {
     }
     return false;
   }
+  async getFriends(email) {
+    const user = await UserModel.findOne({ email }).populate({
+      path: 'friends', select: '-password -__v'
+    }).select('friends -_id').lean();
+    if (user) return user.friends;
+    else return [];
+  }
 }
 module.exports = { User, UserModel };

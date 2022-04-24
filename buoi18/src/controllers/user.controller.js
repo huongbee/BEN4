@@ -12,7 +12,9 @@ class UserController {
       return { success: false, message: 'Can not find user', data: null };
     }
     // check pass sha256(password + PASSWORK_KEY)
-    const passToCheck = SHA256(password + PASSWORK_KEY);
+    const passToCheck = SHA256(password + PASSWORK_KEY).toString();
+    console.log(passToCheck, user.password);
+
     if (passToCheck !== user.password) {
       return { success: false, message: 'Password invalid', data: null };
     }

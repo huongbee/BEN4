@@ -99,5 +99,14 @@ class Post {
     }).exec();
     return posts;
   }
+  async getPostInfo(idPost) {
+    const post = await PostModel.findOne({ _id: idPost })
+      .populate('author', 'name -_id')
+      .populate({
+        path: 'comments',
+        populate: { path: 'author', select: 'name -_id' }
+      });
+    return post;
+  }
 };
 module.exports = Post;
