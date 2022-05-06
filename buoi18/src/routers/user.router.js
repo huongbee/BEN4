@@ -14,7 +14,7 @@ router.post('/login', async (req, res, next) => {
   console.log(resultLogin);
 
   if (!resultLogin.success) {
-    return res.render('login', { errorMessage: resultLogin.message });
+    return res.json(resultLogin)
   }
   // tra ve access token ,, go to home
   const user = {
@@ -24,9 +24,10 @@ router.post('/login', async (req, res, next) => {
     avatar: resultLogin.data.avatar
   }
   const token = signToken(user);
-  res.cookie('accessToken', token);
-  next();
-  return res.redirect('/todo-list');
+  // res.cookie('accessToken', token);
+  // next();
+  // return res.redirect('/todo-list');
+  return res.json({ token })
 });
 /**
  * Login
