@@ -1,0 +1,58 @@
+<% list.forEach((todo)=>{%>
+  <div>
+    <%=todo.title%>
+  </div>
+  <%})%>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <% if(currentPage>1){%>
+          <li class="page-item">
+            <a class="page-link" aria-label="Previous" id="page-<%=currentPage-1%>" page-value="<%=currentPage-1%>">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <%}%>
+            <%for(let i=1; i<=totalPage; i++){%>
+              <li class="page-item <%=(i==currentPage ? 'active': '')%>"><a class="page-link" id="page-<%=i%>"
+                  page-value="<%=i%>">
+                  <span>
+                    <%=i%>
+                  </span>
+                </a></li>
+              <%}%>
+                <% if(currentPage<totalPage){%>
+                  <li class="page-item">
+                    <a class="page-link" id="page-<%=currentPage+1%>" page-value="<%=currentPage+1%>" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                  <%}%>
+      </ul>
+    </nav>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script>
+      $('a[id^=page-]').on('click', function () {
+        const page = $(this).attr('page-value');
+        console.log(page);
+
+        $.ajax(
+          `http://localhost:3000/todo-list/list/${page}`,
+          {
+            method: 'GET',
+            headers: {
+              accesstoken: token
+            },
+            success: function (data) {
+              $('body').html(data);
+            },
+            error: function (jqXhr, textStatus, errorMessage) { // error callback
+              console.log(errorMessage);// cho TH goi API ko thanh cong/url incorrect/timeout
+            }
+          }
+        );
+      });
+    </script>

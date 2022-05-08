@@ -7,49 +7,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-<script>
-  // const accessToken = '<%=accessToken%>'; // from server
-  localStorage.setItem('accessKey', accessToken)
-</script>
 <style>
   a {
     text-decoration: none
   }
 </style>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  const token = localStorage.getItem('accessKey');
+  $('a[id^=page-]').click(function () {
+    const page = this.innerText();
+    console.log(page);
+    $.ajax(
+      'http://localhost:3000/todo-list/list/1',
+      {
+        method: 'GET',
+        headers: {
+          accesstoken: token
+        },
+        success: function (data) {
+          $('body').append(data);
+        },
+        error: function (jqXhr, textStatus, errorMessage) { // error callback
+          console.log(errorMessage);// cho TH goi API ko thanh cong/url incorrect/timeout
+        }
+      }
+    );
+  });
 
-<body>
-  <% list.forEach((todo)=>{%>
-    <div>
-      <%=todo.title%>
-    </div>
-    <%})%>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <% if(currentPage>1){%>
-            <li class="page-item">
-              <a class="page-link" href="http://localhost:3000/todo-list/<%=currentPage-1%>" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <%}%>
-              <%for(let i=1; i<=totalPage; i++){%>
-                <li class="page-item <%=(i==currentPage ? 'active': '')%>"><a class="page-link"
-                    href="http://localhost:3000/todo-list/<%=i%>">
-                    <%=i%>
-                  </a></li>
-                <%}%>
-                  <% if(currentPage<totalPage){%>
-                    <li class="page-item">
-                      <a class="page-link" href="http://localhost:3000/todo-list/<%=currentPage+1%>" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                      </a>
-                    </li>
-                    <%}%>
-        </ul>
-      </nav>
+  $.ajax(
+    'http://localhost:3000/todo-list/list/1',
+    {
+      method: 'GET',
+      headers: {
+        accesstoken: token
+      },
+      success: function (data) {
+        $('body').append(data);
+      },
+      error: function (jqXhr, textStatus, errorMessage) { // error callback
+        console.log(errorMessage);// cho TH goi API ko thanh cong/url incorrect/timeout
+      }
+    }
+  );
+
+</script>
+
+<body style="margin-left:50px ;">
+
 </body>
 
 </html>
