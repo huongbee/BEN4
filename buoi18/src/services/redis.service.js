@@ -31,5 +31,9 @@ class RedisService {
     const result = this.redis.del(key);
     return result;
   }
+  getTTL(key) {
+    const result = this.redis.ttl(key);
+    return result;
+  }
 }
 module.exports = RedisService;

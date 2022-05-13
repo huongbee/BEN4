@@ -37,6 +37,13 @@ class UserController {
     delete user.password;
     return { success: true, message: 'Success', data: user };
   }
+  async forgetPassword(username) {
+    // find the user
+    // generate OTP
+    // luu OTP vao redis
+    // gui OTP ve cho user
+    // return ket qua
+  }
 }
 
 module.exports = {
