@@ -27,6 +27,10 @@ class User {
     const user = await UserModel.findOne({ username }).lean();
     return user;
   }
+  async lockUser(username) {
+    const locked = await UserModel.updateOne({ username }, { isLocked: true });
+    return locked;
+  }
 }
 
 // (async () => {

@@ -11,7 +11,6 @@ router.post('/login', async (req, res, next) => {
   const { username, password } = req.body;
   console.log({ username, password });
   const resultLogin = await UserController.login(username, password);
-  console.log(resultLogin);
 
   if (!resultLogin.success) {
     return res.json(resultLogin)
@@ -31,7 +30,7 @@ router.post('/login', async (req, res, next) => {
 });
 /**
  * Login
- * 1. khóa tk user nếu login sai password quá 5 lần: tạo them field lưu || redis || file
+ * 1. khóa tk user nếu login sai password quá 5 lần (liên tiếp): tạo them field lưu || redis || file
  * 2. kiểm tra user có bị block
 
  * Quên pass -> kiểm tra tk co bi khoa hay ko => gửi OTP(6 digits random) -> user nhập OTP -> kiểm tra tk co bi khoa hay ko,
