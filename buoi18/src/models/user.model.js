@@ -14,7 +14,11 @@ const UserSchema = new Schema({
     required: true,
   },
   fullname: String,
-  avatar: String
+  avatar: String,
+  isLocked: {
+    type: Boolean,
+    default: false
+  }
 });
 const UserModel = mongoose.model('user', UserSchema);
 

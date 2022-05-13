@@ -1,7 +1,7 @@
 const SHA256 = require("crypto-js/sha256");
 const UserModel = require('../models/user.model').User;
-const PASSWORK_KEY = require('../constants/common.constant').PASSWORK_KEY;
-
+const { PASSWORK_KEY, REDIS_KEY } = require('../constants/common.constant');
+const RedisService = require('../services/redis.service');
 class UserController {
   async register(username, password, fullname, avatar) {
     // insert user
@@ -13,9 +13,10 @@ class UserController {
     }
     // check pass sha256(password + PASSWORK_KEY)
     const passToCheck = SHA256(password + PASSWORK_KEY).toString();
-    console.log(passToCheck, user.password);
-
     if (passToCheck !== user.password) {
+      const redis = new RedisService();
+      redis.set(username, true);
+
       return { success: false, message: 'Password invalid', data: null };
     }
     delete user.password;

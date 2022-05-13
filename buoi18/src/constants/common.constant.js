@@ -1,4 +1,7 @@
 const PASSWORK_KEY = 'PASSWORK_KEY@@!1212abc';
 const JWT_KEY = 'JWT_KEY@@!1212abc';
-
-module.exports = { PASSWORK_KEY, JWT_KEY };
+const REDIS_KEY = {
+  INVALID_PASSWORD: 'INVALID_PASSWORD',
+  LOCK_OPT: 'LOCK_OPT'
+};
+module.exports = { PASSWORK_KEY, JWT_KEY, REDIS_KEY };
