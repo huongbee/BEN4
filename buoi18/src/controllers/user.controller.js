@@ -15,8 +15,17 @@ class UserController {
     const passToCheck = SHA256(password + PASSWORK_KEY).toString();
     if (passToCheck !== user.password) {
       const redis = new RedisService();
-      redis.set(username, true);
-
+      // luu count sai : DB || file || redis
+      // await redis.del(REDIS_KEY.INVALID_PASSWORD + '_' + user.username);
+      let count = 0;
+      const solansai = +(await redis.get(REDIS_KEY.INVALID_PASSWORD + '_' + user.username));
+      if (solansai && solansai > 0) {
+        count = solansai;
+      }
+      await redis.set(REDIS_KEY.INVALID_PASSWORD + '_' + user.username, count + 1);// INVALID_PASSWORD_nguyenvana
+      if (count + 1 == 5) {
+        console.log('TK của bạn đã bị khóa');
+      }
       return { success: false, message: 'Password invalid', data: null };
     }
     delete user.password;
