@@ -28,25 +28,29 @@ router.post('/login', async (req, res, next) => {
   // return res.redirect('/todo-list');
   return res.json({ token })
 });
+// 1
 router.post('/forget-password', async (req, res, next) => {
   // xu ly login
   const { username } = req.body;
   //TODO call controller de gui OTP
-  const result = { success: true, message: 'Đã gửi OTP', data: { username } }
+  const result = await UserController.forgetPassword(username);
   return res.json({ result })
 });
-
+//2
 router.post('/forget-password/verify', async (req, res, next) => {
   const { username, OTP } = req.body;
   //TODO call controller de kiem tra OTP
-  const result = { success: true, message: 'Thành công' }
+  const result = await UserController.verifyOTP(username, OTP);
   return res.json({ result })
 });
-
+//3
 router.post('/forget-password/update', async (req, res, next) => {
   const { username, password, repassword } = req.body;
+  if (repassword !== password) {
+    //
+  }
   //TODO call controller de cap nhat pass (luu pass cũ)
-  const result = { success: true, message: 'Thành công' }
+  const result = await UserController.updatePassword(username, password);
   return res.json({ result })
 });
 /**

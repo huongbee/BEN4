@@ -16,6 +16,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  oldPassword: {
+    type: String,
+    default: null
+  },
   fullname: String,
   avatar: String,
   isLocked: {
@@ -33,6 +37,18 @@ class User {
   async lockUser(username) {
     const locked = await UserModel.updateOne({ username }, { isLocked: true });
     return locked;
+  }
+  async updatePassword(user, password) {
+    const update = await UserModel.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          password, // cap nhat mk moi
+          oldPassword: user.password// luu lai mk cu
+        }
+      }
+    );
+    return update;
   }
 }
 
