@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const UserController = require('../controllers/user.controller').UserController;
 const { signToken, verifyToken } = require('../services/jwt.service');
+const { authenticate } = require('../middleware/validate');
 
 router.get('/login', (req, res) => {
   res.render('login');
@@ -53,6 +54,11 @@ router.post('/forget-password/update', async (req, res, next) => {
   const result = await UserController.updatePassword(username, password);
   return res.json({ result })
 });
+router.post('/update-password', authenticate, async (req, res, next) => {
+  const { password } = req.body;
+  //TODO call controller de cap nhat pass
+  return res.status(200).json({ success: true })
+});
 /**
  * Login
  * 1. khóa tk user nếu login sai password quá 5 lần (liên tiếp): tạo them field lưu || redis || file
@@ -62,11 +68,11 @@ router.post('/forget-password/update', async (req, res, next) => {
 // => output: 1. gửi OTP gui cho user(không phải response của api),
 //            2: thông báo đã gửi OTP cho client (web/app)(là response của api)
 
- * Quên pass -> kiểm tra tk co bi khoa hay ko => gửi OTP(6 digits random) -> user nhập OTP -> kiểm tra tk co bi khoa hay ko,
+ * Quên pass -> kiểm tra tk co bi khoa hay ko => gửi OTP(6 digits random) -> user nhập OTP
  *      => mess: Bạn đã nhập sai OTP quá 5 lần liên tiếp, vui lòng thử lại sau 30p20s hoặc liên hệ bộ phận CSKH để được hỗ trợ!
  *   Gửi lại OTP -> ?s true|false -> không gửi OTP (mess: Vui lòng thử lại sau 30p15s)
  *   Change pass: password === re passs ->
  * Update pass: user logged in: không câp nhật lại giống 2 mk cũ
- * cron job 00:00 scan table users (queue) => check lasted update pass => khóa tài khoản, push noti về client
+ * cron job 00:00 scan table users (queue) => check lasted update pass => yc update pass, push noti về client
  */
 module.exports = router;

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.js",
+    "run-job": "nodemon src/job.js"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,7 @@
     "express": "^4.17.3",
     "ioredis": "^5.0.4",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.3.1"
+    "mongoose": "^6.3.1",
+    "node-cron": "^3.0.0"
   }
 }

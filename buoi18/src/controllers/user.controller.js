@@ -44,6 +44,9 @@ class UserController {
     if (!user) {
       return { success: false, message: 'Can not find user', data: null };
     }
+    if (user.isLocked) {
+      return { success: false, message: 'Account was locked', data: null };
+    }
     // kiem tra user co bi lock gui OTP hay khong
     const check = await checkTimeToLiveRedis(user.username);
     if (!check.success) return check;
