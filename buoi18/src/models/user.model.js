@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-// const PASSWORK_KEY = require('../constants/common.constant').PASSWORK_KEY;
-// const SHA256 = require("crypto-js/sha256");
+const PASSWORK_KEY = require('../constants/common.constant').PASSWORK_KEY;
+const SHA256 = require("crypto-js/sha256");
 
 const UserSchema = new Schema({
   username: {
@@ -31,7 +31,7 @@ const UserModel = mongoose.model('user', UserSchema);
 
 class User {
   async findUserByUsername(username) {
-    const user = await UserModel.findOne({ username }).lean();
+    const user = { name: 'My Name' }// await UserModel.findOne({ username }).lean();
     return user;
   }
   async lockUser(username) {
@@ -39,25 +39,38 @@ class User {
     return locked;
   }
   async updatePassword(user, password) {
-    const update = await UserModel.updateOne(
-      { _id: user._id },
-      {
-        $set: {
-          password, // cap nhat mk moi
-          oldPassword: user.password// luu lai mk cu
-        }
-      }
-    );
+    // const update = await UserModel.updateOne(
+    //   { _id: user._id },
+    //   {
+    //     $set: {
+    //       password, // cap nhat mk moi
+    //       oldPassword: user.password// luu lai mk cu
+    //     }
+    //   }
+    // );
+    const update = { name: 'updated' }
     return update;
   }
 }
 
 // (async () => {
-//   // await UserModel.create({
-//   //   username: 'nguyenvana',
-//   //   password: SHA256('111111' + PASSWORK_KEY),  // f2cd2919f32a93ecbc5c4911ab90410d3e7b8fab939b4ed6d09825e978c0f150
-//   //   fullname: 'Nguyen Van A',
-//   //   avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png'
-//   // });
+//   for (let i = 1; i <= 1000; i++) {
+//     await UserModel.create({
+//       username: 'user-' + i,
+//       password: SHA256(1 + PASSWORK_KEY),
+//       fullname: 'User ' + i,
+//       avatar: ''
+//     });
+//   }
 // })()
+// {
+//     "_id" : ObjectId("62878f5deb0dabff2b395323"),
+//     "username" : "user-9",
+//     "password" : "ff42cc9103dccd980778694cb22794e23fb9f40a906394896852d9e7c94e8f21",
+//     "oldPassword" : null,
+//     "fullname" : "User 9",
+//     "avatar" : "",
+//     "isLocked" : false,
+//     "__v" : 0
+// }
 module.exports = { User: new User() };
