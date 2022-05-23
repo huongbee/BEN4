@@ -15,7 +15,6 @@ app.use(express.static('src/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-
 var compiled = ejs.compile(fs.readFileSync(__dirname + '/views/test-mail.ejs', 'utf8'));
 var html = compiled({ name: 'NodeJS' });
 sendMail('huongnguyenak96@gmail.com', 'Test', html);
